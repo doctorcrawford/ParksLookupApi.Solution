@@ -38,10 +38,11 @@ public class ParksController : ControllerBase
 
   // POST api/parks
   [HttpPost]
-  public async Task<ActionResult<Park>> PostParkAsync(Park park)
+  public async Task<ActionResult<Park>> PostParkAsync([FromBody]Park park)
   {
     _db.Parks.Add(park);
     await _db.SaveChangesAsync();
-    return CreatedAtAction(nameof(GetParkAsync), new { id = park.ParkId }, park);
+    // return CreatedAtAction(nameof(GetParkAsync), new { id = park.ParkId });
+    return StatusCode(201);
   }
 }
