@@ -17,9 +17,36 @@ public class ParksController : ControllerBase
 
   // GET api/parks
   [HttpGet]
-  public async Task<ActionResult<IEnumerable<Park>>> GetAllParksAsync()
+  public async Task<ActionResult<IEnumerable<Park>>> GetAllParksAsync(string name, string type, string state, int inceptionYear, string featuredAnimal)
   {
-    return await _db.Parks.ToListAsync();
+    IQueryable<Park> query = _db.Parks.AsQueryable();
+
+    if (name != null)
+    {
+      query = query.Where(e => e.Name == name);
+    }
+
+    if (type != null)
+    {
+      query = query.Where(e => e.Type == type);
+    }
+
+    if (state != null)
+    {
+      query = query.Where(e => e.State == state);
+    }
+
+    if (inceptionYear > 0)
+    {
+      query = query.Where(e => e.InceptionYear == inceptionYear);
+    }
+
+    if (featuredAnimal != null)
+    {
+      query = query.Where(e => e.FeaturedAnimal == featuredAnimal);
+    }
+
+    return await query.ToListAsync();
   }
 
   // GET api/parks/3
