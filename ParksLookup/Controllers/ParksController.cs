@@ -76,4 +76,20 @@ public class ParksController : ControllerBase
   {
     return _db.Parks.Any(e => e.ParkId == id);
   }
+
+  // DELETE api/parks/3
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteAnimalAsync(int id)
+  {
+    var park = await _db.Parks.FindAsync(id);
+    if (park == null)
+    {
+      return NotFound();
+    }
+
+    _db.Parks.Remove(park);
+    await _db.SaveChangesAsync();
+
+    return NoContent();
+  }
 }
