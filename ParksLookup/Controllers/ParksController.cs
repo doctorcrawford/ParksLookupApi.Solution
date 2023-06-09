@@ -38,11 +38,42 @@ public class ParksController : ControllerBase
 
   // POST api/parks
   [HttpPost]
-  public async Task<ActionResult<Park>> PostParkAsync([FromBody]Park park)
+  public async Task<ActionResult<Park>> PostParkAsync([FromBody] Park park)
   {
     _db.Parks.Add(park);
     await _db.SaveChangesAsync();
     // return CreatedAtAction(nameof(GetParkAsync), new { id = park.ParkId });
     return StatusCode(201);
+  }
+
+  // PUT api/parks/3
+  [HttpPut("{id}")]
+  public async Task<IActionResult> PutParkAsync(int id, Park park)
+  {
+    if (id != park.ParkId)
+    {
+      return BadRequest();
+    }
+
+    _db.Parks.Update(park);
+
+    try
+    {
+      await _db.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+      if (!ParkExists(id))
+      {
+        return NotFound();
+      }
+      throw;
+    }
+    return NoContent();
+  }
+
+  private bool ParkExists(int id)
+  {
+    return _db.Parks.Any(e => e.ParkId == id);
   }
 }
