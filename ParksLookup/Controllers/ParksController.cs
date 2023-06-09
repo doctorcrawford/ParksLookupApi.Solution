@@ -4,8 +4,8 @@ using ParksLookupApi.Models;
 
 namespace ParksLookupApi.Controllers;
 
+[Route("api/[controller]")]
 [ApiController]
-[Route("[controller]")]
 public class ParksController : ControllerBase
 {
   private readonly ParksLookupApiContext _db;
@@ -22,6 +22,7 @@ public class ParksController : ControllerBase
     return await _db.Parks.ToListAsync();
   }
 
+  // GET api/parks/3
   [HttpGet("{id}")]
   public async Task<ActionResult<Park>> GetParkAsync(int id)
   {
@@ -33,5 +34,14 @@ public class ParksController : ControllerBase
     }
 
     return park;
+  }
+
+  // POST api/parks
+  [HttpPost]
+  public async Task<ActionResult<Park>> PostParkAsync(Park park)
+  {
+    _db.Parks.Add(park);
+    await _db.SaveChangesAsync();
+    return CreatedAtAction(nameof(GetParkAsync), new { id = park.ParkId }, park);
   }
 }
