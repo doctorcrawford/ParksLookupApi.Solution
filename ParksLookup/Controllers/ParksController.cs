@@ -17,7 +17,7 @@ public class ParksController : ControllerBase
 
   // GET api/parks
   [HttpGet]
-  public async Task<ActionResult<IEnumerable<Park>>> GetAllParksAsync(string name, string type, string state, int inceptionYear, string featuredAnimal)
+  public async Task<ActionResult<IEnumerable<Park>>> GetParksAsync(string name, string type, string state, int inceptionYear, string featuredAnimal)
   {
     IQueryable<Park> query = _db.Parks.AsQueryable();
 
