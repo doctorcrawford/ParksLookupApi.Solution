@@ -1,5 +1,9 @@
 using ParksLookupApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,33 @@ builder.Services.AddDbContext<ParksLookupApiContext>(
                     )
                   )
                 );
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddEntityFrameworkStores<ParksLookupApiContext>()
+        .AddDefaultTokenProviders();
+
+ConfigurationManager configuration = builder.Configuration;
+
+builder.Services.AddAuthentication(options =>
+                            {
+                              options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                              options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                              options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                            })
+                            .AddJwtBearer(options =>
+                            {
+                              options.SaveToken = true;
+                              options.RequireHttpsMetadata = false;
+                              options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                              {
+                                ValidateIssuer = true,
+                                ValidateAudience = true,
+                                ValidAudience = configuration["JWT:ValidAudience"],
+                                ValidIssuer = configuration["JWT:ValidIssuer"],
+                                ClockSkew = TimeSpan.Zero,
+                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+                              };
+                            });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
