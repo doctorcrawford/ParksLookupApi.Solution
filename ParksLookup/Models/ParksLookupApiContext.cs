@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ParksLookupApi.Models;
 
-public class ParksLookupApiContext : DbContext
+public class ParksLookupApiContext : IdentityDbContext<IdentityUser>
 {
   public DbSet<Park> Parks { get; set; }
   public ParksLookupApiContext(DbContextOptions<ParksLookupApiContext> options) : base(options)
@@ -20,6 +22,6 @@ public class ParksLookupApiContext : DbContext
         new Park { ParkId = 5, Name = "Fahnestock", State = "New York", InceptionYear = 1929, FeaturedAnimal = "Red-Shouldered Hawks" }
       );
 
+    base.OnModelCreating(builder);
   }
-
 }

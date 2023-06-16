@@ -7,6 +7,8 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+ConfigurationManager configuration = builder.Configuration;
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -22,7 +24,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<ParksLookupApiContext>()
         .AddDefaultTokenProviders();
 
-ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddAuthentication(options =>
                             {
@@ -45,6 +46,7 @@ builder.Services.AddAuthentication(options =>
                               };
                             });
 
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -63,6 +65,7 @@ else
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

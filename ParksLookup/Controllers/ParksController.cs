@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParksLookupApi.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace ParksLookupApi.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ParksController : ControllerBase

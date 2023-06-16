@@ -1,4 +1,4 @@
-namespace MouseMingleApi.DTO;
+namespace ParksLookupApi.DTO;
 
 public class Response
 {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MouseMingleApi.DTO;
+namespace ParksLookupApi.DTO;
 
 public class LoginModel
 {
