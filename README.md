@@ -23,6 +23,9 @@ An API that serves as database for various parks around the country. It utilizes
 
 Install the tools that are introduced in [this series of lessons on LearnHowToProgram.com](https://www.learnhowtoprogram.com/c-and-net/getting-started-with-c).
 
+#### Install Postman
+(Optional) [Download and install Postman](https://www.postman.com/downloads/).
+
 ### Set Up and Use
 
 #### Cloning
@@ -33,7 +36,7 @@ Install the tools that are introduced in [this series of lessons on LearnHowToPr
 #### AppSettings
 
 1. Within the production directory "ParksLookup", create a new file called `appsettings.json`.
-2. Within `appsettings.json`, put in the following code, replacing the `uid` and `pwd` values with your own username and password for MySQL.
+2. Within `appsettings.json`, put in the following code, replacing the `uid` and `pwd` values with your own username and password for MySQL. Also replace `YourSecret` with a random string of choice to be your JWT Secret.
 
 ```json
 {
@@ -44,7 +47,12 @@ Install the tools that are introduced in [this series of lessons on LearnHowToPr
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-      "DefaultConnection": "Server=localhost;Port=3306;database=kyle_crawford;uid=root;pwd=YourPassword;"
+      "DefaultConnection": "Server=localhost;Port=3306;database=kyle_crawford;uid=[YourUserId];pwd=[YourPassword];"
+  },
+  "JWT": {
+    "ValidAudience": "http://localhost:4200",
+    "ValidIssuer": "http://localhost:5000",
+    "Secret": "[YourSecret]"
   }
 }
 ```
@@ -66,27 +74,30 @@ Explore the API endpoints in a browser. You will not be able to utilize authenti
 To explore the ParksLookup API with Swagger, launch the project using `dotnet watch run` with the Terminal or Powershell, and input the following URL into your browser: `https://localhost:5001/swagger/index.html`
 
 ### Using the JSON Web Token
-*WIP*
-<!-- In order to be authorized to use the POST, PUT, DELETE functionality of the API, please authenticate yourself through Postman.
-* Open Postman and create a POST request using the URL: `http://localhost:5000/api/accounts`
+In order to be authorized to use the POST, PUT, DELETE functionality of the API, please authenticate yourself through Postman.
+* Open Postman and create a POST request using the URL: `http://localhost:5000/api/account/register`
 * Add the following query to the request as raw data in the Body tab:
 ```
 {
+  "username": "user1",
   "email": "user1@example.com",
   "password": "String1!"
 }
-``` -->
-<!-- * The token will be generated in the response. Copy and paste it as the Token paramenter in the Authorization tab. -->
-
-#### Example Query
 ```
-http://localhost:5000/api/parks/?state=oregon
+* Then, log in by creating another POST request using the URL: `http://localhost:5000/api/login`
+* Add the following query to the request as raw data in the Body tab:
 ```
+{
+  "username": "user1",
+  "password": "String1!"
+}
+```
+* The token will be generated in the response. Copy and paste it as the Bearer Token paramenter in the Authorization tab.
 
 ..........................................................................................
 
 ### Endpoints
-Base URL: `https://localhost:5001`
+Base URL: `http://localhost:5000`
 
 #### HTTP Request Structure
 ```
@@ -130,9 +141,7 @@ http://localhost:5000/api/park/3
 ## Known Bugs
 
 * _Any known issues_
-Endpoints only hitting through Swagger.
-Token that gets sent isn't full token.
-Authentication validation not implemented on endpoints.
+None
 
 ## License
 [MIT](https://opensource.org/license/mit)
