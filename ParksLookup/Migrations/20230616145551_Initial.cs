@@ -22,15 +22,27 @@ namespace ParksLookup.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     State = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    InceptionYear = table.Column<int>(type: "int", nullable: false),
                     FeaturedAnimal = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    InceptionYear = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Parks", x => x.ParkId);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.InsertData(
+                table: "Parks",
+                columns: new[] { "ParkId", "FeaturedAnimal", "InceptionYear", "Name", "State" },
+                values: new object[,]
+                {
+                    { 1, "Elk", 1872, "Yellowstone", "Wyoming" },
+                    { 2, "Golden-Mantled Ground Squirrel", 1902, "Crater Lake", "Oregon" },
+                    { 3, "Desert Bighorn Sheep", 1964, "Canyonlands", "Utah" },
+                    { 4, "Great Horned Owl", 1958, "Oswald West State Park", "Oregon" },
+                    { 5, "Red-Shouldered Hawks", 1929, "Fahnestock", "New York" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

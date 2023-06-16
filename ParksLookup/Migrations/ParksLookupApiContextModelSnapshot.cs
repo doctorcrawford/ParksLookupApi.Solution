@@ -36,9 +36,6 @@ namespace ParksLookup.Migrations
                     b.Property<string>("State")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("longtext");
-
                     b.HasKey("ParkId");
 
                     b.ToTable("Parks");
@@ -50,8 +47,7 @@ namespace ParksLookup.Migrations
                             FeaturedAnimal = "Elk",
                             InceptionYear = 1872,
                             Name = "Yellowstone",
-                            State = "Wyoming",
-                            Type = "National"
+                            State = "Wyoming"
                         },
                         new
                         {
@@ -59,8 +55,7 @@ namespace ParksLookup.Migrations
                             FeaturedAnimal = "Golden-Mantled Ground Squirrel",
                             InceptionYear = 1902,
                             Name = "Crater Lake",
-                            State = "Oregon",
-                            Type = "National"
+                            State = "Oregon"
                         },
                         new
                         {
@@ -68,8 +63,7 @@ namespace ParksLookup.Migrations
                             FeaturedAnimal = "Desert Bighorn Sheep",
                             InceptionYear = 1964,
                             Name = "Canyonlands",
-                            State = "Utah",
-                            Type = "National"
+                            State = "Utah"
                         },
                         new
                         {
@@ -77,8 +71,7 @@ namespace ParksLookup.Migrations
                             FeaturedAnimal = "Great Horned Owl",
                             InceptionYear = 1958,
                             Name = "Oswald West State Park",
-                            State = "Oregon",
-                            Type = "State"
+                            State = "Oregon"
                         },
                         new
                         {
@@ -86,8 +79,7 @@ namespace ParksLookup.Migrations
                             FeaturedAnimal = "Red-Shouldered Hawks",
                             InceptionYear = 1929,
                             Name = "Fahnestock",
-                            State = "New York",
-                            Type = "State"
+                            State = "New York"
                         });
                 });
 #pragma warning restore 612, 618

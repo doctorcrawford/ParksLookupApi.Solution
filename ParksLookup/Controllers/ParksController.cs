@@ -26,11 +26,6 @@ public class ParksController : ControllerBase
       query = query.Where(e => e.Name == name);
     }
 
-    if (type != null)
-    {
-      query = query.Where(e => e.Type == type);
-    }
-
     if (state != null)
     {
       query = query.Where(e => e.State == state);
